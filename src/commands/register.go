@@ -2,6 +2,7 @@ package commands
 
 import (
 	"github.com/Phuongaz/minecraft-bedrock-server/src/commands/economy"
+	"github.com/Phuongaz/minecraft-bedrock-server/src/commands/npc"
 	"github.com/df-mc/dragonfly/server/cmd"
 )
 
@@ -30,4 +31,5 @@ func Setup() {
 	cmd.Register(cmd.New("givemoney", "Give balance.", nil, economy.GiveBalance{}))
 	cmd.Register(cmd.New("paymoney", "Pay balance to player", []string{"pay"}, economy.PayBalance{}))
 
+	cmd.Register(cmd.New("npc", "NPC commands", nil, npc.Create{}, npc.Delete{}))
 }
