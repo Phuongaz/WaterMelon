@@ -27,5 +27,7 @@ func Setup() {
 
 	cmd.Register(cmd.New("mymoney", "Your balance.", nil, economy.MyBalance{}))
 	cmd.Register(cmd.New("setmoney", "Set balance.", nil, economy.SetBalance{}))
+	cmd.Register(cmd.New("givemoney", "Give balance.", nil, economy.GiveBalance{}))
+	cmd.Register(cmd.New("paymoney", "Pay balance to player", []string{"pay"}, economy.PayBalance{}))
 
 }

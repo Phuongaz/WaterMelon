@@ -8,25 +8,27 @@ import (
 	"github.com/df-mc/dragonfly/server/player"
 )
 
-type SetBalance struct {
+type GiveBalance struct {
 	Target  string
 	Balance int64
 }
 
-func (b SetBalance) Run(src cmd.Source, output *cmd.Output) {
+func (g GiveBalance) Run(src cmd.Source, output *cmd.Output) {
 	if _, ok := src.(*player.Player); ok {
-		p, ok := server.Global().PlayerByName(b.Target)
+		p, ok := server.Global().PlayerByName(g.Target)
 		if ok {
 			id := p.UUID()
 			e := modules.EcoEntry()
-			e.Set(id, uint64(b.Balance))
-			p.Messagef("Ok")
+			balance, _ := e.Balance(id)
+			nbalance := balance + uint64(g.Balance)
+			e.Set(id, nbalance)
+			p.Messagef("Your balance +%v", nbalance)
 		} else {
-			output.Errorf("Player %v not found", b.Target)
+			output.Errorf("Player %v not found", g.Target)
 		}
 	}
 }
 
-func (SetBalance) Allow(s cmd.Source) bool {
+func (g GiveBalance) Allow(s cmd.Source) bool {
 	return permission.OpEntry().Has(s.Name())
 }
