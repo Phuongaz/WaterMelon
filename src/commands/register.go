@@ -3,6 +3,7 @@ package commands
 import (
 	"github.com/Phuongaz/minecraft-bedrock-server/src/commands/economy"
 	"github.com/Phuongaz/minecraft-bedrock-server/src/commands/npc"
+	"github.com/Phuongaz/minecraft-bedrock-server/src/skyblock/command"
 	"github.com/df-mc/dragonfly/server/cmd"
 )
 
@@ -32,4 +33,12 @@ func Setup() {
 	cmd.Register(cmd.New("paymoney", "Pay balance to player", []string{"pay"}, economy.PayBalance{}))
 
 	cmd.Register(cmd.New("npc", "NPC commands", nil, npc.Create{}, npc.Delete{}))
+
+	cmd.Register(cmd.New("skyblock", "Manages skyblock and their settings.", []string{"sb"},
+		command.Claim{},
+		command.List{},
+		command.Teleport{},
+		command.Clear{},
+		command.Auto{},
+	))
 }
