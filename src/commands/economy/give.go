@@ -23,6 +23,7 @@ func (g GiveBalance) Run(src cmd.Source, output *cmd.Output) {
 			nbalance := balance + uint64(g.Balance)
 			e.Set(id, nbalance)
 			p.Messagef("Your balance +%v", nbalance)
+			e.Close()
 		} else {
 			output.Errorf("Player %v not found", g.Target)
 		}

@@ -27,6 +27,7 @@ func (g PayBalance) Run(src cmd.Source, output *cmd.Output) {
 			e.Set(pid, pnbalance)
 			t.Messagef("Player %v pay %v", p.Name(), g.Balance)
 			p.Messagef("Pay %v, %v ok", t.Name(), g.Balance)
+			e.Close()
 		} else {
 			output.Errorf("Player %v not found", g.Target)
 		}

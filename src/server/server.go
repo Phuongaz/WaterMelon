@@ -34,7 +34,8 @@ func Setup(l *logrus.Logger) error {
 	if sql, err := provider.NewSQLite("economy.db"); err != nil {
 		fmt.Errorf("fail creating economy database: %v", err)
 	} else {
-		_ = economy.New(sql)
+		e := economy.New(sql)
+		e.Close()
 	}
 	return nil
 }

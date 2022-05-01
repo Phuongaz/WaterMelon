@@ -21,6 +21,7 @@ func (b SetBalance) Run(src cmd.Source, output *cmd.Output) {
 			e := modules.EcoEntry()
 			e.Set(id, uint64(b.Balance))
 			p.Messagef("Ok")
+			e.Close()
 		} else {
 			output.Errorf("Player %v not found", b.Target)
 		}

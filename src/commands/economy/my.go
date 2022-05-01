@@ -10,11 +10,13 @@ type MyBalance struct{}
 
 func (m MyBalance) Run(src cmd.Source, output *cmd.Output) {
 	if p, ok := src.(*player.Player); ok {
-		balance, error := modules.EcoEntry().Balance(p.UUID())
+		e := modules.EcoEntry()
+		balance, error := e.Balance(p.UUID())
 		if error != nil {
 			p.Messagef("Your balance %v", balance)
 		} else {
 			output.Errorf("Error %v", error)
 		}
+		e.Close()
 	}
 }
