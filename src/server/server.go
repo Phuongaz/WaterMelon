@@ -11,6 +11,8 @@ import (
 	"github.com/df-mc/dragonfly/server"
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/pelletier/go-toml"
+	"github.com/provsalt/economy"
+	"github.com/provsalt/economy/provider"
 	"github.com/sirupsen/logrus"
 )
 
@@ -28,6 +30,11 @@ func Setup(l *logrus.Logger) error {
 		return err
 	} else {
 		_global = server.New(&cfg, l)
+	}
+	if sql, err := provider.NewSQLite("economy.db"); err != nil {
+		fmt.Errorf("fail creating economy database: %v", err)
+	} else {
+		_ = economy.New(sql)
 	}
 	return nil
 }

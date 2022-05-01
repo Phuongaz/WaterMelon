@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"github.com/Phuongaz/minecraft-bedrock-server/src/commands/economy"
 	"github.com/df-mc/dragonfly/server/cmd"
 )
 
@@ -23,4 +24,8 @@ func Setup() {
 	cmd.Register(cmd.New("defaultgamemode", "Sets the default game mode.", nil, DefaultGameMode{}))
 	cmd.Register(cmd.New("gamemode", "Sets your game mode.", []string{"gm"}, GameMode{}))
 	cmd.Register(cmd.New("setworldspawn", "Sets the world spawn.", nil, SetWorldSpawn{}))
+
+	cmd.Register(cmd.New("mymoney", "Your balance.", nil, economy.MyBalance{}))
+	cmd.Register(cmd.New("setmoney", "Set balance.", nil, economy.SetBalance{}))
+
 }

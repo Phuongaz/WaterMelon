@@ -29,7 +29,6 @@ func main() {
 	if err := server.Global().Start(); err != nil {
 		logrus.Fatal(err)
 	}
-
 	server.Global().Allow(permission.BanEntry().ServerAllower("You are banned", false))
 	server.Loop(func(p *player.Player) {
 	}, func() {
