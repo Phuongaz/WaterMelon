@@ -3,6 +3,7 @@ package commands
 import (
 	"github.com/Phuongaz/minecraft-bedrock-server/src/commands/economy"
 	"github.com/Phuongaz/minecraft-bedrock-server/src/commands/npc"
+	"github.com/Phuongaz/minecraft-bedrock-server/src/commands/world"
 	"github.com/Phuongaz/minecraft-bedrock-server/src/skyblock/command"
 	"github.com/df-mc/dragonfly/server/cmd"
 )
@@ -41,4 +42,6 @@ func Setup() {
 		command.Clear{},
 		command.Auto{},
 	))
+
+	cmd.Register(cmd.New("world", "World commands", nil, world.List{}, world.Teleport{}))
 }

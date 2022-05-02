@@ -55,6 +55,8 @@ github.com/df-mc/goleveldb v1.1.9 h1:ihdosZyy5jkQKrxucTQmN90jq/2lUwQnJZjIYIC/9YU
 github.com/df-mc/goleveldb v1.1.9/go.mod h1:+NHCup03Sci5q84APIA21z3iPZCuk6m6ABtg4nANCSk=
 github.com/df-mc/npc v1.0.2 h1:qPJFtE6c+EdilMz/T3Fw20fYHcI36ENvEeOHGP7tzBo=
 github.com/df-mc/npc v1.0.2/go.mod h1:DkDiScr6+P1UN4wxBOOMjJ010BEjZugbbWBvhs5HHiM=
+github.com/df-plus/worldmanager v0.0.0-20220303015935-5774d51521f3 h1:7ufGmrp7qA7phAJ5oMXetquvk5dsz46cwnFNAJME1F4=
+github.com/df-plus/worldmanager v0.0.0-20220303015935-5774d51521f3/go.mod h1:9Xw4sPkNjL8hvkiSWq5zLr0lzeMV7N4aohqI5kf9AWQ=
 github.com/dustin/go-humanize v1.0.0/go.mod h1:HtrtbFcZ19U5GC7JDqmcUSB87Iq5E25KnS6fMYU6eOk=
 github.com/envoyproxy/go-control-plane v0.9.0/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=

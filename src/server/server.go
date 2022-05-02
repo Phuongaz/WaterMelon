@@ -10,16 +10,26 @@ import (
 	"github.com/Phuongaz/minecraft-bedrock-server/src/util"
 	"github.com/df-mc/dragonfly/server"
 	"github.com/df-mc/dragonfly/server/player"
+	"github.com/df-mc/dragonfly/server/world"
+	"github.com/df-plus/worldmanager"
 	"github.com/pelletier/go-toml"
-	"github.com/provsalt/economy"
-	"github.com/provsalt/economy/provider"
 	"github.com/sirupsen/logrus"
 )
 
 var _global *server.Server
+var _log *logrus.Logger
+var _worldm *worldmanager.WorldManager
 
 func Global() *server.Server {
 	return _global
+}
+
+func Logger() *logrus.Logger {
+	return _log
+}
+
+func WorldManager() *worldmanager.WorldManager {
+	return _worldm
 }
 
 func Setup(l *logrus.Logger) error {
@@ -30,15 +40,29 @@ func Setup(l *logrus.Logger) error {
 		return err
 	} else {
 		_global = server.New(&cfg, l)
+		_log = l
+		_worldm = worldmanager.New(_global, _log)
 	}
-	_global.CloseOnProgramEnd()
-	if sql, err := provider.NewSQLite("economy.db"); err != nil {
-		fmt.Errorf("fail creating economy database: %v", err)
-	} else {
-		e := economy.New(sql)
-		e.Close()
-	}
+	LoadWorlds(l)
 	return nil
+}
+
+func LoadWorlds(log *logrus.Logger) {
+	files, err := ioutil.ReadDir("worlds/")
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, file := range files {
+		set := world.Settings{
+			Name: file.Name(),
+		}
+		err := _worldm.LoadWorld("worlds/"+file.Name(), &set, world.Overworld)
+		if err != nil {
+			log.Errorf("World '%v' can't load: %v", file.Name(), err)
+		} else {
+			log.Infof("World '%v' is loaded", file.Name())
+		}
+	}
 }
 
 func readConfig() (server.Config, error) {

@@ -17,6 +17,7 @@ require (
 	github.com/df-mc/atomic v1.10.0 // indirect
 	github.com/df-mc/goleveldb v1.1.9 // indirect
 	github.com/df-mc/npc v1.0.2 // indirect
+	github.com/df-plus/worldmanager v0.0.0-20220303015935-5774d51521f3 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/uuid v1.3.0 // indirect
