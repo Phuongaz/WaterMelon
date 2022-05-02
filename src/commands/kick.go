@@ -14,6 +14,9 @@ type Kick struct {
 }
 
 func (b Kick) Run(src cmd.Source, o *cmd.Output) {
+	if !b.Allow(src) {
+		o.Errorf("You don't have permission to use this command")
+	}
 	if b.Target == nil {
 		o.Error("Target not found")
 		return

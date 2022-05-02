@@ -12,6 +12,9 @@ type Difficulty struct {
 }
 
 func (d Difficulty) Run(src cmd.Source, o *cmd.Output) {
+	if !d.Allow(src) {
+		o.Errorf("You don't have permission to use this command")
+	}
 	if di, err := convert.ParseDifficulty(d.Diff); err != nil {
 		o.Error(err)
 	} else {

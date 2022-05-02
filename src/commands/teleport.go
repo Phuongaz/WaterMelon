@@ -16,6 +16,8 @@ func (t Teleport) Run(src cmd.Source, output *cmd.Output) {
 		if ok := t.Allow(src); ok {
 			p.Teleport(mgl64.Vec3{t.X, t.Y, t.Z})
 			output.Printf("Teleported to X: %d Y: %d Z: %d", int(t.X), int(t.Y), int(t.Z))
+		} else {
+			output.Errorf("You don't have permission to use this command")
 		}
 	} else {
 		output.Error("This command must use in game")

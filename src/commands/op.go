@@ -11,6 +11,9 @@ type Op struct {
 }
 
 func (b Op) Run(src cmd.Source, o *cmd.Output) {
+	if !b.Allow(src) {
+		o.Errorf("You don't have permission to use this command")
+	}
 	if b.Target == "" {
 		o.Error("Command argument error")
 		return
@@ -33,6 +36,9 @@ type DeOp struct {
 }
 
 func (b DeOp) Run(src cmd.Source, o *cmd.Output) {
+	if !b.Allow(src) {
+		o.Errorf("You don't have permission to use this command")
+	}
 	if b.Target == "" {
 		o.Error("Command argument error")
 		return

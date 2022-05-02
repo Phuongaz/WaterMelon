@@ -15,7 +15,6 @@ import (
 
 func main() {
 	log := logrus.New()
-	log.Level = logrus.DebugLevel
 	log.Formatter = &logrus.TextFormatter{ForceColors: true}
 	if err := server.Setup(log); err != nil {
 		logrus.Fatal(err)

@@ -10,7 +10,10 @@ import (
 
 type Status struct{}
 
-func (Status) Run(src cmd.Source, o *cmd.Output) {
+func (s Status) Run(src cmd.Source, o *cmd.Output) {
+	if !s.Allow(src) {
+		o.Errorf("You don't have permission to use this command")
+	}
 	stat := getMemStats()
 	o.Printf("Goroutine Count: %v", runtime.NumGoroutine())
 	o.Printf("Allocated Memory: %dMB", stat.Sys/1024/1024)

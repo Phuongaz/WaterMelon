@@ -10,7 +10,10 @@ import (
 
 type SetWorldSpawn struct{}
 
-func (SetWorldSpawn) Run(src cmd.Source, o *cmd.Output) {
+func (s SetWorldSpawn) Run(src cmd.Source, o *cmd.Output) {
+	if !s.Allow(src) {
+		o.Errorf("You don't have permission to use this command")
+	}
 	if p, ok := src.(*player.Player); ok {
 		s := cube.PosFromVec3(p.Position())
 		server.Global().World().SetSpawn(s)

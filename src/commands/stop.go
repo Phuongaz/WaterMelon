@@ -8,7 +8,10 @@ import (
 
 type Stop struct{}
 
-func (Stop) Run(src cmd.Source, o *cmd.Output) {
+func (s Stop) Run(src cmd.Source, o *cmd.Output) {
+	if !s.Allow(src) {
+		o.Errorf("You don't have permission to use this command")
+	}
 	out := &cmd.Output{}
 	out.Print("Stopping the server")
 	for _, p := range server.Global().Players() {

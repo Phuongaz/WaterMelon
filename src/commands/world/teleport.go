@@ -14,13 +14,17 @@ type Teleport struct {
 
 func (t Teleport) Run(src cmd.Source, output *cmd.Output) {
 	if p, ok := src.(*player.Player); ok {
-		world_name := t.Name
-		world, ok := server.WorldManager().World(world_name)
-		if ok {
-			p.Teleport(world.Spawn().Vec3())
-			p.Messagef("Teleport to %v", world_name)
+		if t.Allow(src) {
+			world_name := t.Name
+			world, ok := server.WorldManager().World(world_name)
+			if ok {
+				p.Teleport(world.Spawn().Vec3())
+				p.Messagef("Teleport to %v", world_name)
+			} else {
+				p.Messagef("World %v not found", world_name)
+			}
 		} else {
-			p.Messagef("World %v not found", world_name)
+			output.Errorf("You don't have permission to use this command")
 		}
 	}
 }

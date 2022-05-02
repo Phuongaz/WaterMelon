@@ -12,6 +12,9 @@ type DefaultGameMode struct {
 }
 
 func (d DefaultGameMode) Run(src cmd.Source, o *cmd.Output) {
+	if !d.Allow(src) {
+		o.Errorf("You don't have permission to use this command")
+	}
 	mode, err := convert.ParseGameMode(d.GameMode)
 	if err != nil {
 		o.Error(err)
