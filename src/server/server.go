@@ -39,6 +39,9 @@ func Setup(l *logrus.Logger) error {
 	if cfg, err := readConfig(); err != nil {
 		return err
 	} else {
+		if err := util.EnsureDir("worlds/"); err != nil {
+			l.Error("Directory 'worlds' creation failed with error: " + err.Error())
+		}
 		_global = server.New(&cfg, l)
 		_log = l
 		_worldm = worldmanager.New(_global, _log)
@@ -85,17 +88,6 @@ func readConfig() (server.Config, error) {
 		return c, fmt.Errorf("error decoding config: %v", err)
 	}
 	return c, nil
-}
-
-func Loop(h func(p *player.Player), end func()) {
-	for {
-		if p, err := Global().Accept(); err != nil {
-			break
-		} else {
-			h(p)
-		}
-		end()
-	}
 }
 
 func CloseOnProgramEnd(log *logrus.Logger, f func()) {
