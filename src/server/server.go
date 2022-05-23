@@ -9,7 +9,6 @@ import (
 
 	"github.com/Phuongaz/minecraft-bedrock-server/src/util"
 	"github.com/df-mc/dragonfly/server"
-	"github.com/df-mc/dragonfly/server/player"
 	"github.com/df-mc/dragonfly/server/world"
 	"github.com/df-plus/worldmanager"
 	"github.com/pelletier/go-toml"
