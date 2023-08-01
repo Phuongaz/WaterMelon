@@ -1,11 +1,11 @@
 package economy
 
 import (
-	"github.com/Phuongaz/minecraft-bedrock-server/src/modules"
-	"github.com/Phuongaz/minecraft-bedrock-server/src/permission"
-	"github.com/Phuongaz/minecraft-bedrock-server/src/server"
 	"github.com/df-mc/dragonfly/server/cmd"
 	"github.com/df-mc/dragonfly/server/player"
+	"github.com/phuongaz/minecraft-bedrock-server/src/modules"
+	"github.com/phuongaz/minecraft-bedrock-server/src/permission"
+	"github.com/phuongaz/minecraft-bedrock-server/src/server"
 )
 
 type SetBalance struct {
@@ -19,9 +19,15 @@ func (b SetBalance) Run(src cmd.Source, output *cmd.Output) {
 		if ok {
 			id := p.UUID()
 			e := modules.EcoEntry()
-			e.Set(id, uint64(b.Balance))
+			err := e.Set(id, uint64(b.Balance))
+			if err != nil {
+				return
+			}
 			p.Messagef("Ok")
-			e.Close()
+			err = e.Close()
+			if err != nil {
+				return
+			}
 		} else {
 			output.Errorf("Player %v not found", b.Target)
 		}
@@ -29,5 +35,5 @@ func (b SetBalance) Run(src cmd.Source, output *cmd.Output) {
 }
 
 func (SetBalance) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.Name())
+	return permission.OpEntry().Has(s.(*player.Player).Name())
 }

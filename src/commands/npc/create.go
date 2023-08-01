@@ -1,10 +1,10 @@
 package npc
 
 import (
-	"github.com/Phuongaz/minecraft-bedrock-server/src/permission"
 	"github.com/df-mc/dragonfly/server/cmd"
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/df-mc/npc"
+	"github.com/phuongaz/minecraft-bedrock-server/src/permission"
 )
 
 type Create struct {
@@ -13,16 +13,16 @@ type Create struct {
 	CommandExcute string
 }
 
-func (c Create) Run(src cmd.Source, output *cmd.Output) {
+func (d Create) Run(src cmd.Source, _ *cmd.Output) {
 	if p, ok := src.(*player.Player); ok {
-		if c.Allow(src) {
+		if d.Allow(src) {
 			settings := npc.Settings{
-				Name:     c.Name,
+				Name:     d.Name,
 				Position: p.Position(),
 				Skin:     p.Skin(),
 			}
 			f := func(player *player.Player) {
-				player.ExecuteCommand(c.CommandExcute)
+				player.ExecuteCommand(d.CommandExcute)
 			}
 			npc.Create(settings, p.World(), f)
 		}
@@ -36,5 +36,5 @@ func (create) SubName() string {
 }
 
 func (d Create) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.Name())
+	return permission.OpEntry().Has(s.(*player.Player).Name())
 }

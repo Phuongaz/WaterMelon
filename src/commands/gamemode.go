@@ -1,10 +1,10 @@
 package commands
 
 import (
-	"github.com/Phuongaz/minecraft-bedrock-server/src/convert"
-	"github.com/Phuongaz/minecraft-bedrock-server/src/permission"
 	"github.com/df-mc/dragonfly/server/cmd"
 	"github.com/df-mc/dragonfly/server/player"
+	"github.com/phuongaz/minecraft-bedrock-server/src/convert"
+	"github.com/phuongaz/minecraft-bedrock-server/src/permission"
 )
 
 type GameMode struct {
@@ -12,7 +12,7 @@ type GameMode struct {
 }
 
 func (g GameMode) Run(src cmd.Source, o *cmd.Output) {
-	if permission.OpEntry().Has(src.Name()) {
+	if permission.OpEntry().Has(src.(*player.Player).Name()) {
 		if p, ok := src.(*player.Player); ok {
 			mode, err := convert.ParseGameMode(g.GameMode)
 			if err != nil {
@@ -30,5 +30,5 @@ func (g GameMode) Run(src cmd.Source, o *cmd.Output) {
 }
 
 func (g GameMode) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.Name())
+	return permission.OpEntry().Has(s.(*player.Player).Name())
 }

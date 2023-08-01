@@ -1,9 +1,9 @@
 package world
 
 import (
-	"github.com/Phuongaz/minecraft-bedrock-server/src/permission"
-	"github.com/Phuongaz/minecraft-bedrock-server/src/server"
 	"github.com/df-mc/dragonfly/server/cmd"
+	"github.com/df-mc/dragonfly/server/player"
+	"github.com/phuongaz/minecraft-bedrock-server/src/permission"
 )
 
 type List struct {
@@ -11,16 +11,11 @@ type List struct {
 }
 
 func (l List) Run(src cmd.Source, output *cmd.Output) {
-	worldmanager := server.WorldManager()
-	list := worldmanager.Worlds()
-	output.Printf("Worlds: (%v)", len(list))
-	for _, world := range list {
-		output.Printf("+ %v", world.Name())
-	}
+	//TODO: show list worlds
 }
 
 func (t List) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.Name())
+	return permission.OpEntry().Has(s.(*player.Player).Name())
 }
 
 type list string

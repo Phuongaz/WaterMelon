@@ -1,10 +1,11 @@
 package commands
 
 import (
-	"github.com/Phuongaz/minecraft-bedrock-server/src/convert"
-	"github.com/Phuongaz/minecraft-bedrock-server/src/permission"
-	"github.com/Phuongaz/minecraft-bedrock-server/src/server"
 	"github.com/df-mc/dragonfly/server/cmd"
+	"github.com/df-mc/dragonfly/server/player"
+	"github.com/phuongaz/minecraft-bedrock-server/src/convert"
+	"github.com/phuongaz/minecraft-bedrock-server/src/permission"
+	"github.com/phuongaz/minecraft-bedrock-server/src/server"
 )
 
 type Difficulty struct {
@@ -24,5 +25,5 @@ func (d Difficulty) Run(src cmd.Source, o *cmd.Output) {
 }
 
 func (d Difficulty) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.Name())
+	return permission.OpEntry().Has(s.(*player.Player).Name())
 }

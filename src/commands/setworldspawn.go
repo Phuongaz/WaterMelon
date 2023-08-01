@@ -1,11 +1,11 @@
 package commands
 
 import (
-	"github.com/Phuongaz/minecraft-bedrock-server/src/permission"
-	"github.com/Phuongaz/minecraft-bedrock-server/src/server"
 	"github.com/df-mc/dragonfly/server/block/cube"
 	"github.com/df-mc/dragonfly/server/cmd"
 	"github.com/df-mc/dragonfly/server/player"
+	"github.com/phuongaz/minecraft-bedrock-server/src/permission"
+	"github.com/phuongaz/minecraft-bedrock-server/src/server"
 )
 
 type SetWorldSpawn struct{}
@@ -24,5 +24,5 @@ func (s SetWorldSpawn) Run(src cmd.Source, o *cmd.Output) {
 }
 
 func (SetWorldSpawn) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.Name())
+	return permission.OpEntry().Has(s.(*player.Player).Name())
 }

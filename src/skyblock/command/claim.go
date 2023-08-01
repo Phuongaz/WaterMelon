@@ -4,7 +4,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/Phuongaz/minecraft-bedrock-server/src/skyblock"
+	"github.com/phuongaz/minecraft-bedrock-server/src/skyblock"
 	"github.com/df-mc/dragonfly/server/block"
 	"github.com/df-mc/dragonfly/server/block/cube"
 	"github.com/df-mc/dragonfly/server/cmd"

@@ -1,10 +1,10 @@
 package commands
 
 import (
-	"github.com/Phuongaz/minecraft-bedrock-server/src/commands/economy"
-	"github.com/Phuongaz/minecraft-bedrock-server/src/commands/npc"
-	"github.com/Phuongaz/minecraft-bedrock-server/src/commands/world"
-	"github.com/Phuongaz/minecraft-bedrock-server/src/skyblock/command"
+	"github.com/phuongaz/minecraft-bedrock-server/src/commands/economy"
+	"github.com/phuongaz/minecraft-bedrock-server/src/commands/npc"
+	"github.com/phuongaz/minecraft-bedrock-server/src/commands/world"
+	"github.com/phuongaz/minecraft-bedrock-server/src/skyblock/command"
 	"github.com/df-mc/dragonfly/server/cmd"
 )
 

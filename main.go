@@ -1,42 +1,36 @@
 package main
 
 import (
-	"github.com/Phuongaz/minecraft-bedrock-server/src/commands"
-	"github.com/Phuongaz/minecraft-bedrock-server/src/console"
-	"github.com/Phuongaz/minecraft-bedrock-server/src/permission"
-	"github.com/Phuongaz/minecraft-bedrock-server/src/server"
-	"github.com/Phuongaz/minecraft-bedrock-server/src/skyblock"
-	"github.com/Phuongaz/minecraft-bedrock-server/src/util"
 	"github.com/df-mc/dragonfly/server/block/cube"
+	"github.com/df-mc/dragonfly/server/entity"
+	"github.com/df-mc/dragonfly/server/player"
 	"github.com/df-mc/dragonfly/server/player/chat"
 	"github.com/df-mc/dragonfly/server/world"
+	"github.com/phuongaz/minecraft-bedrock-server/src/commands"
+	"github.com/phuongaz/minecraft-bedrock-server/src/console"
+	"github.com/phuongaz/minecraft-bedrock-server/src/server"
+	"github.com/phuongaz/minecraft-bedrock-server/src/skyblock"
+	"github.com/phuongaz/minecraft-bedrock-server/src/util"
 	"github.com/sirupsen/logrus"
 )
 
 func main() {
 	log := logrus.New()
 	log.Formatter = &logrus.TextFormatter{ForceColors: true}
-	if err := server.Setup(log); err != nil {
-		logrus.Fatal(err)
+	wm, err := server.New(log)
+	if err != nil {
+		log.Fatal(err)
 	}
-
 	chat.Global.Subscribe(&util.LoggerSubscriber{Logger: log})
 	commands.Setup()
 	c := console.Setup(log)
 	c.Run()
-	server.CloseOnProgramEnd(log, func() {
+	wm.CloseOnProgramEnd(log, func() {
 		c.Stop()
 	})
-	if err := server.Global().Start(); err != nil {
-		logrus.Fatal(err)
-	}
-	server.Global().Allow(permission.BanEntry().ServerAllower("You are banned", false))
 
-	w := server.Global().World()
-	w.SetDefaultGameMode(world.GameModeCreative)
-	w.SetSpawn(cube.Pos{2, skyblock.RoadHeight, 2})
-	w.SetTime(5000)
-	w.StopTime()
+	//wm.Srv.Allow(permission.BanEntry().ServerAllower("You are banned", false))
+
 	settings := skyblock.Settings{
 		PlotWidth:    32,
 		MaximumPlots: 16,
@@ -45,19 +39,19 @@ func main() {
 	if err != nil {
 		log.Fatalf("error opening plot database: %v", err)
 	}
-
-	if err != nil {
-		log.Fatalf("error opening plot database: %v", err)
-	}
-	w.Generator(skyblock.NewGenerator(settings))
-	w.Handle(skyblock.NewWorldHandler(w, settings))
-
-	for {
-		p, err := server.Global().Accept()
-		if err != nil {
-			break
-		}
+	plot := world.Config{
+		Log:       wm.Log,
+		Generator: skyblock.NewGenerator(settings),
+		Entities:  entity.DefaultRegistry,
+	}.New()
+	plot.SetSpawn(cube.Pos{2, skyblock.RoadHeight, 2})
+	plot.SetTime(5000)
+	plot.Handle(skyblock.NewWorldHandler(plot, settings))
+	plot.Handle(skyblock.NewWorldHandler(plot, settings))
+	wm.Srv.Listen()
+	for wm.Srv.Accept(func(p *player.Player) {
 		p.Handle(skyblock.NewPlayerHandler(p, settings, db))
+	}) {
 	}
 	_ = db.Close()
 }

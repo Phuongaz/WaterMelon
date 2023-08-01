@@ -102,7 +102,7 @@ func (h *PlayerHandler) HandleMove(_ *event.Context, pos mgl64.Vec3, _, _ float6
 }
 
 // HandleBlockBreak prevents block breaking outside of the player's plots.
-func (h *PlayerHandler) HandleBlockBreak(ctx *event.Context, pos cube.Pos, _ *[]item.Stack) {
+func (h *PlayerHandler) HandleBlockBreak(ctx *event.Context, pos cube.Pos, _ *[]item.Stack, _ *int) {
 	if !h.canEdit(pos) {
 		h.p.World().PlaySound(pos.Vec3Centre(), sound.Deny{})
 		h.p.World().AddParticle(pos.Vec3Centre(), particle.BlockForceField{})

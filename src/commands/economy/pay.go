@@ -1,10 +1,10 @@
 package economy
 
 import (
-	"github.com/Phuongaz/minecraft-bedrock-server/src/modules"
-	"github.com/Phuongaz/minecraft-bedrock-server/src/server"
 	"github.com/df-mc/dragonfly/server/cmd"
 	"github.com/df-mc/dragonfly/server/player"
+	"github.com/phuongaz/minecraft-bedrock-server/src/modules"
+	"github.com/phuongaz/minecraft-bedrock-server/src/server"
 )
 
 type PayBalance struct {
@@ -27,7 +27,10 @@ func (g PayBalance) Run(src cmd.Source, output *cmd.Output) {
 			e.Set(pid, pnbalance)
 			t.Messagef("Player %v pay %v", p.Name(), g.Balance)
 			p.Messagef("Pay %v, %v ok", t.Name(), g.Balance)
-			e.Close()
+			err := e.Close()
+			if err != nil {
+				return
+			}
 		} else {
 			output.Errorf("Player %v not found", g.Target)
 		}

@@ -3,7 +3,7 @@ package commands
 import (
 	"runtime"
 
-	"github.com/Phuongaz/minecraft-bedrock-server/src/server"
+	"github.com/phuongaz/minecraft-bedrock-server/src/server"
 	"github.com/df-mc/dragonfly/server/cmd"
 	"github.com/sandertv/gophertunnel/minecraft/protocol"
 )

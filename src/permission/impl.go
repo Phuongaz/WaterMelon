@@ -3,7 +3,7 @@ package permission
 import (
 	"path/filepath"
 
-	"github.com/Phuongaz/minecraft-bedrock-server/src/util"
+	"github.com/phuongaz/minecraft-bedrock-server/src/util"
 )
 
 var _banEntry = NewEntry(filepath.Join(util.WorkingPath, "banned-players.txt"), "CONSOLE")

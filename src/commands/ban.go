@@ -1,12 +1,13 @@
 package commands
 
 import (
+	"github.com/df-mc/dragonfly/server/player"
 	"sort"
 	"strings"
 
-	"github.com/Phuongaz/minecraft-bedrock-server/src/permission"
-	"github.com/Phuongaz/minecraft-bedrock-server/src/server"
 	"github.com/df-mc/dragonfly/server/cmd"
+	"github.com/phuongaz/minecraft-bedrock-server/src/permission"
+	"github.com/phuongaz/minecraft-bedrock-server/src/server"
 )
 
 type Ban struct {
@@ -27,7 +28,7 @@ func (b Ban) Run(src cmd.Source, o *cmd.Output) {
 }
 
 func (b Ban) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.Name())
+	return permission.OpEntry().Has(s.(*player.Player).Name())
 }
 
 type Unban struct {
@@ -44,7 +45,7 @@ func (u Unban) Run(src cmd.Source, o *cmd.Output) {
 }
 
 func (u Unban) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.Name())
+	return permission.OpEntry().Has(s.(*player.Player).Name())
 }
 
 type BanList struct {
@@ -58,5 +59,5 @@ func (BanList) Run(src cmd.Source, o *cmd.Output) {
 }
 
 func (b BanList) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.Name())
+	return permission.OpEntry().Has(s.(*player.Player).Name())
 }

@@ -1,9 +1,10 @@
 package commands
 
 import (
+	"github.com/df-mc/dragonfly/server/player"
 	"runtime"
 
-	"github.com/Phuongaz/minecraft-bedrock-server/src/permission"
+	"github.com/phuongaz/minecraft-bedrock-server/src/permission"
 
 	"github.com/df-mc/dragonfly/server/cmd"
 )
@@ -24,7 +25,7 @@ func (s Status) Run(src cmd.Source, o *cmd.Output) {
 }
 
 func (Status) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.Name())
+	return permission.OpEntry().Has(s.(*player.Player).Name())
 }
 
 func getMemStats() runtime.MemStats {

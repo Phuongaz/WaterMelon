@@ -1,11 +1,11 @@
 package economy
 
 import (
-	"github.com/Phuongaz/minecraft-bedrock-server/src/modules"
-	"github.com/Phuongaz/minecraft-bedrock-server/src/permission"
-	"github.com/Phuongaz/minecraft-bedrock-server/src/server"
 	"github.com/df-mc/dragonfly/server/cmd"
 	"github.com/df-mc/dragonfly/server/player"
+	"github.com/phuongaz/minecraft-bedrock-server/src/modules"
+	"github.com/phuongaz/minecraft-bedrock-server/src/permission"
+	"github.com/phuongaz/minecraft-bedrock-server/src/server"
 )
 
 type GiveBalance struct {
@@ -31,5 +31,5 @@ func (g GiveBalance) Run(src cmd.Source, output *cmd.Output) {
 }
 
 func (g GiveBalance) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.Name())
+	return permission.OpEntry().Has(s.(*player.Player).Name())
 }

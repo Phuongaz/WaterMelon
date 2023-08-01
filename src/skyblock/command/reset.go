@@ -1,7 +1,7 @@
 package command
 
 import (
-	"github.com/Phuongaz/minecraft-bedrock-server/src/skyblock"
+	"github.com/phuongaz/minecraft-bedrock-server/src/skyblock"
 	"github.com/df-mc/dragonfly/server/block/cube"
 	"github.com/df-mc/dragonfly/server/cmd"
 	"github.com/df-mc/dragonfly/server/player"

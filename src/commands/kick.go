@@ -3,9 +3,9 @@ package commands
 import (
 	"fmt"
 
-	"github.com/Phuongaz/minecraft-bedrock-server/src/permission"
 	"github.com/df-mc/dragonfly/server/cmd"
 	"github.com/df-mc/dragonfly/server/player"
+	"github.com/phuongaz/minecraft-bedrock-server/src/permission"
 )
 
 type Kick struct {
@@ -38,5 +38,5 @@ func (b Kick) Run(src cmd.Source, o *cmd.Output) {
 }
 
 func (Kick) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.Name())
+	return permission.OpEntry().Has(s.(*player.Player).Name())
 }

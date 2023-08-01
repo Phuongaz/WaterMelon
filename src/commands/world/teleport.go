@@ -1,10 +1,10 @@
 package world
 
 import (
-	"github.com/Phuongaz/minecraft-bedrock-server/src/permission"
-	"github.com/Phuongaz/minecraft-bedrock-server/src/server"
 	"github.com/df-mc/dragonfly/server/cmd"
 	"github.com/df-mc/dragonfly/server/player"
+	"github.com/phuongaz/minecraft-bedrock-server/src/permission"
+	"github.com/phuongaz/minecraft-bedrock-server/src/server"
 )
 
 type Teleport struct {
@@ -15,14 +15,13 @@ type Teleport struct {
 func (t Teleport) Run(src cmd.Source, output *cmd.Output) {
 	if p, ok := src.(*player.Player); ok {
 		if t.Allow(src) {
-			world_name := t.Name
-			world, ok := server.WorldManager().World(world_name)
-			if ok {
-				p.Teleport(world.Spawn().Vec3())
-				p.Messagef("Teleport to %v", world_name)
-			} else {
-				p.Messagef("World %v not found", world_name)
+			worldName := t.Name
+			world, err := server.WaterMelonGlobal().GetWorld(worldName)
+			if err != nil {
+				output.Errorf("World not found")
+				return
 			}
+			p.Teleport(world.Spawn().Vec3())
 		} else {
 			output.Errorf("You don't have permission to use this command")
 		}
@@ -30,7 +29,7 @@ func (t Teleport) Run(src cmd.Source, output *cmd.Output) {
 }
 
 func (t Teleport) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.Name())
+	return permission.OpEntry().Has(s.(*player.Player).Name())
 }
 
 type tp string

@@ -22,7 +22,7 @@ func NewWorldHandler(w *world.World, settings Settings) *WorldHandler {
 }
 
 // HandleLiquidFlow prevents liquid from flowing out of a plot.
-func (w *WorldHandler) HandleLiquidFlow(ctx *event.Context, _, into cube.Pos, _, _ world.Block) {
+func (w *WorldHandler) HandleLiquidFlow(ctx *event.Context, _ cube.Pos, into cube.Pos, _ world.Liquid, _ world.Block) {
 	fullPlotSize := int32(pathWidth + boundaryWidth + w.settings.PlotWidth)
 	relativeX, relativeZ := mod(int32(into[0]), fullPlotSize), mod(int32(into[2]), fullPlotSize)
 

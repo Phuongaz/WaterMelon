@@ -1,10 +1,10 @@
 package commands
 
 import (
-	"github.com/Phuongaz/minecraft-bedrock-server/src/permission"
 	"github.com/df-mc/dragonfly/server/cmd"
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/go-gl/mathgl/mgl64"
+	"github.com/phuongaz/minecraft-bedrock-server/src/permission"
 )
 
 type Teleport struct {
@@ -25,5 +25,5 @@ func (t Teleport) Run(src cmd.Source, output *cmd.Output) {
 }
 
 func (Teleport) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.Name())
+	return permission.OpEntry().Has(s.(*player.Player).Name())
 }

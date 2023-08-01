@@ -1,9 +1,10 @@
 package commands
 
 import (
-	"github.com/Phuongaz/minecraft-bedrock-server/src/permission"
-	"github.com/Phuongaz/minecraft-bedrock-server/src/server"
 	"github.com/df-mc/dragonfly/server/cmd"
+	"github.com/df-mc/dragonfly/server/player"
+	"github.com/phuongaz/minecraft-bedrock-server/src/permission"
+	"github.com/phuongaz/minecraft-bedrock-server/src/server"
 )
 
 type Op struct {
@@ -28,7 +29,7 @@ func (b Op) Run(src cmd.Source, o *cmd.Output) {
 }
 
 func (Op) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.Name())
+	return permission.OpEntry().Has(s.(*player.Player).Name())
 }
 
 type DeOp struct {
@@ -48,5 +49,5 @@ func (b DeOp) Run(src cmd.Source, o *cmd.Output) {
 }
 
 func (DeOp) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.Name())
+	return permission.OpEntry().Has(s.(*player.Player).Name())
 }

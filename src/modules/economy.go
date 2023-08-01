@@ -2,6 +2,7 @@ package modules
 
 import (
 	"github.com/provsalt/economy"
+	"github.com/provsalt/economy/handler"
 	"github.com/provsalt/economy/provider"
 )
 
@@ -10,6 +11,6 @@ func EcoEntry() (e *economy.Economy) {
 	if err != nil {
 		panic(err)
 	}
-	e = economy.New(sql)
+	e = economy.New(sql, handler.NopEconomyHandler{})
 	return
 }

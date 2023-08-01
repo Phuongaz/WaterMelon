@@ -1,11 +1,14 @@
 package npc
 
 import (
-	"github.com/Phuongaz/minecraft-bedrock-server/src/permission"
+	"github.com/df-mc/dragonfly/server/entity"
+	"time"
+
 	"github.com/df-mc/dragonfly/server/cmd"
-	"github.com/df-mc/dragonfly/server/entity/damage"
 	"github.com/df-mc/dragonfly/server/event"
 	"github.com/df-mc/dragonfly/server/player"
+	"github.com/df-mc/dragonfly/server/world"
+	"github.com/phuongaz/minecraft-bedrock-server/src/permission"
 )
 
 var _isDelete bool = false
@@ -30,18 +33,21 @@ func (delete) SubName() string {
 }
 
 func (d Delete) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.Name())
+	return permission.OpEntry().Has(s.(*player.Player).Name())
 }
 
 type Handler struct {
 	player.NopHandler
 }
 
-func (h *Handler) HandleHurt(ctx *event.Context, _ *float64, src damage.Source) {
-	if src, ok := src.(damage.SourceEntityAttack); ok {
+func (h *Handler) HandleHurt(ctx *event.Context, damage *float64, attackImmunity *time.Duration, src world.DamageSource) {
+	if src, ok := src.(entity.AttackDamageSource); ok {
 		if attacker, ok := src.Attacker.(*player.Player); ok {
 			if _isDelete {
-				src.Attacker.Close()
+				err := src.Attacker.Close()
+				if err != nil {
+					return
+				}
 				attacker.Messagef("Delete NPC success!")
 				_isDelete = false
 			}

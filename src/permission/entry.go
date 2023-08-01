@@ -4,7 +4,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/Phuongaz/minecraft-bedrock-server/src/util"
+	"github.com/phuongaz/minecraft-bedrock-server/src/util"
 )
 
 type Entry struct {

@@ -3,7 +3,7 @@ package command
 import (
 	"strconv"
 
-	"github.com/Phuongaz/minecraft-bedrock-server/src/skyblock"
+	"github.com/phuongaz/minecraft-bedrock-server/src/skyblock"
 	"github.com/df-mc/dragonfly/server/cmd"
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/sandertv/gophertunnel/minecraft/text"
