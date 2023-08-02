@@ -32,7 +32,7 @@ func (b Ban) Allow(s cmd.Source) bool {
 }
 
 type Unban struct {
-	Target string
+	Target string `cmd:"target"`
 }
 
 func (u Unban) Run(src cmd.Source, o *cmd.Output) {
@@ -59,5 +59,8 @@ func (BanList) Run(src cmd.Source, o *cmd.Output) {
 }
 
 func (b BanList) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.(*player.Player).Name())
+	if _, ok := s.(*player.Player); ok {
+		return permission.OpEntry().Has(s.(*player.Player).Name())
+	}
+	return true
 }

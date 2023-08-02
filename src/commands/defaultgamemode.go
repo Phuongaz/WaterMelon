@@ -9,7 +9,7 @@ import (
 )
 
 type DefaultGameMode struct {
-	GameMode string
+	GameMode string `cmd:"gamemode"`
 }
 
 func (d DefaultGameMode) Run(src cmd.Source, o *cmd.Output) {
@@ -26,5 +26,8 @@ func (d DefaultGameMode) Run(src cmd.Source, o *cmd.Output) {
 }
 
 func (d DefaultGameMode) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.(*player.Player).Name())
+	if _, ok := s.(*player.Player); ok {
+		return permission.OpEntry().Has(s.(*player.Player).Name())
+	}
+	return true
 }

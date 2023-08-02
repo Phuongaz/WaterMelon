@@ -9,7 +9,7 @@ import (
 )
 
 type Difficulty struct {
-	Diff string
+	Diff string `cmd:"difficulty"`
 }
 
 func (d Difficulty) Run(src cmd.Source, o *cmd.Output) {
@@ -25,5 +25,8 @@ func (d Difficulty) Run(src cmd.Source, o *cmd.Output) {
 }
 
 func (d Difficulty) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.(*player.Player).Name())
+	if _, ok := s.(*player.Player); ok {
+		return permission.OpEntry().Has(s.(*player.Player).Name())
+	}
+	return true
 }

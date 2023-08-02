@@ -1,17 +1,17 @@
 package command
 
 import (
-	"github.com/phuongaz/minecraft-bedrock-server/src/skyblock"
 	"github.com/df-mc/dragonfly/server/block/cube"
 	"github.com/df-mc/dragonfly/server/cmd"
 	"github.com/df-mc/dragonfly/server/player"
+	"github.com/phuongaz/minecraft-bedrock-server/src/skyblock"
 	"github.com/sandertv/gophertunnel/minecraft/text"
 )
 
 // Clear implements the /plot clear command. It may be used to clear one's plot without removing the claim
 // from it.
 type Clear struct {
-	Sub clear
+	Clear cmd.SubCommand `cmd:"clear"`
 }
 
 // Run ...
@@ -36,12 +36,4 @@ func (r Clear) Run(source cmd.Source, output *cmd.Output) {
 	pos.Reset(p.World(), h.Settings())
 	f := current.ColourToFormat()
 	output.Printf(text.Colourf("<%v>■</%v> <green>Successfully cleared the plot.</green>", f, f))
-}
-
-// clear ...
-type clear string
-
-// SubName ...
-func (clear) SubName() string {
-	return "clear"
 }

@@ -25,7 +25,10 @@ func (s Status) Run(src cmd.Source, o *cmd.Output) {
 }
 
 func (Status) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.(*player.Player).Name())
+	if _, ok := s.(*player.Player); ok {
+		return permission.OpEntry().Has(s.(*player.Player).Name())
+	}
+	return true
 }
 
 func getMemStats() runtime.MemStats {

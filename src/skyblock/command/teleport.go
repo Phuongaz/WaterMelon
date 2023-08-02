@@ -3,16 +3,16 @@ package command
 import (
 	"strconv"
 
-	"github.com/phuongaz/minecraft-bedrock-server/src/skyblock"
 	"github.com/df-mc/dragonfly/server/cmd"
 	"github.com/df-mc/dragonfly/server/player"
+	"github.com/phuongaz/minecraft-bedrock-server/src/skyblock"
 	"github.com/sandertv/gophertunnel/minecraft/text"
 )
 
 // Teleport implements a /plot tp command which may be used to teleport to a specific plot owned by the
 // player.
 type Teleport struct {
-	Sub tp
+	Teleport cmd.SubCommand `cmd:"tp"`
 	// Number is the number of the plot to teleport to. These numbers may be found by running /p list.
 	Number plotNumber `name:"number"`
 }
@@ -38,21 +38,8 @@ func (t Teleport) Run(source cmd.Source, output *cmd.Output) {
 	output.Printf(text.Colourf("<%v>■</%v> <green>Successfully teleported to your plot.</green>", f, f))
 }
 
-// tp ...
-type tp string
-
-// SubName ...
-func (tp) SubName() string {
-	return "tp"
-}
-
 // plotNumber ...
-type plotNumber string
-
-// Type ...
-func (plotNumber) Type() string {
-	return "PlotNumber"
-}
+type plotNumber cmd.Varargs
 
 // Options returns a number for every plot the player has.
 func (plotNumber) Options(source cmd.Source) []string {

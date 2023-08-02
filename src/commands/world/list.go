@@ -7,20 +7,13 @@ import (
 )
 
 type List struct {
-	Sub list
+	List string `cmd:"list"`
 }
 
 func (l List) Run(src cmd.Source, output *cmd.Output) {
 	//TODO: show list worlds
 }
 
-func (t List) Allow(s cmd.Source) bool {
+func (l List) Allow(s cmd.Source) bool {
 	return permission.OpEntry().Has(s.(*player.Player).Name())
-}
-
-type list string
-
-// SubName ...
-func (list) SubName() string {
-	return "list"
 }

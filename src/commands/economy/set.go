@@ -9,8 +9,8 @@ import (
 )
 
 type SetBalance struct {
-	Target  string
-	Balance int64
+	Target  string `cmd:"target"`
+	Balance int64  `cmd:"balance"`
 }
 
 func (b SetBalance) Run(src cmd.Source, output *cmd.Output) {

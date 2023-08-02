@@ -8,8 +8,8 @@ import (
 )
 
 type PayBalance struct {
-	Target  string
-	Balance int64
+	Target  string `cmd:"target"`
+	Balance int64  `cmd:"balance"`
 }
 
 func (g PayBalance) Run(src cmd.Source, output *cmd.Output) {

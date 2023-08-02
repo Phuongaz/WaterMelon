@@ -8,8 +8,8 @@ import (
 )
 
 type Teleport struct {
-	Sub  tp
-	Name string
+	Teleport cmd.SubCommand `cmd:"tp"`
+	Name     string         `cmd:"name"`
 }
 
 func (t Teleport) Run(src cmd.Source, output *cmd.Output) {
@@ -30,11 +30,4 @@ func (t Teleport) Run(src cmd.Source, output *cmd.Output) {
 
 func (t Teleport) Allow(s cmd.Source) bool {
 	return permission.OpEntry().Has(s.(*player.Player).Name())
-}
-
-type tp string
-
-// SubName ...
-func (tp) SubName() string {
-	return "tp"
 }

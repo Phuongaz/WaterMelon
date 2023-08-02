@@ -4,13 +4,13 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/phuongaz/minecraft-bedrock-server/src/skyblock"
 	"github.com/df-mc/dragonfly/server/block"
 	"github.com/df-mc/dragonfly/server/block/cube"
 	"github.com/df-mc/dragonfly/server/cmd"
 	"github.com/df-mc/dragonfly/server/item"
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/df-mc/dragonfly/server/world"
+	"github.com/phuongaz/minecraft-bedrock-server/src/skyblock"
 	"github.com/sandertv/gophertunnel/minecraft/text"
 )
 
@@ -20,7 +20,7 @@ func init() {
 
 // Claim implements the claim command.
 type Claim struct {
-	Sub claim
+	Claim cmd.SubCommand `cmd:"claim"`
 }
 
 // Run ...
@@ -94,12 +94,4 @@ func generateRandomColour(existing []*skyblock.Plot) item.Colour {
 			return c
 		}
 	}
-}
-
-// claim ...
-type claim string
-
-// SubName ...
-func (claim) SubName() string {
-	return "claim"
 }
