@@ -123,3 +123,7 @@ func colourFromString(s string) (interface{}, error) {
 func (p *Plot) ColourToString() string {
 	return strings.Title(strings.Replace(p.Colour, "_", " ", -1))
 }
+
+func SetUp() {
+
+}

@@ -20,20 +20,8 @@ func NewGenerator(s Settings) *Generator {
 	}
 }
 
-const (
-	// RoadHeight is a rough Y position of the height of the road where a player can be safely teleported.
-	RoadHeight = 24
-	// Base Y of 20 blocks. The floor will start at a y level of 20.
-	//baseY = 20
-	// Path width of 5 blocks, excluding the boundary blocks.
-	pathWidth = 5
-	// Boundary width of 2 blocks, 1 block around all sides.
-	boundaryWidth = 2
-)
-
 // GenerateChunk generates a chunk for a plot world.
 func (g *Generator) GenerateChunk(pos world.ChunkPos, chunk *chunk.Chunk) {
-
 	chunkX := pos.X()
 	chunkZ := pos.Z()
 	if chunkX%20 == 0 {

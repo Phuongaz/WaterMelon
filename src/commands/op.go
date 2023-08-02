@@ -29,7 +29,10 @@ func (b Op) Run(src cmd.Source, o *cmd.Output) {
 }
 
 func (Op) Allow(s cmd.Source) bool {
-	return permission.OpEntry().Has(s.(*player.Player).Name())
+	if _, ok := s.(*player.Player); ok {
+		return permission.OpEntry().Has(s.(*player.Player).Name())
+	}
+	return true
 }
 
 type DeOp struct {

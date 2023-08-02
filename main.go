@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/df-mc/dragonfly/server/block/cube"
-	"github.com/df-mc/dragonfly/server/entity"
 	"github.com/df-mc/dragonfly/server/player"
 	"github.com/df-mc/dragonfly/server/player/chat"
 	"github.com/df-mc/dragonfly/server/world"
@@ -35,19 +34,18 @@ func main() {
 		PlotWidth:    32,
 		MaximumPlots: 16,
 	}
-	db, err := skyblock.OpenDB("plots", settings)
+
+	w, err := wm.WorldManager.CreateWorld("plots", world.Overworld, skyblock.NewGenerator(settings), cube.Pos{2, skyblock.RoadHeight, 2})
+	if err != nil {
+		log.Fatalf("error creating plot world: %v", err)
+		return
+	}
+
+	w.Handle(skyblock.NewWorldHandler(w, settings))
+	db, err := skyblock.OpenDB("worlds/plots/db", settings)
 	if err != nil {
 		log.Fatalf("error opening plot database: %v", err)
 	}
-	plot := world.Config{
-		Log:       wm.Log,
-		Generator: skyblock.NewGenerator(settings),
-		Entities:  entity.DefaultRegistry,
-	}.New()
-	plot.SetSpawn(cube.Pos{2, skyblock.RoadHeight, 2})
-	plot.SetTime(5000)
-	plot.Handle(skyblock.NewWorldHandler(plot, settings))
-	plot.Handle(skyblock.NewWorldHandler(plot, settings))
 	wm.Srv.Listen()
 	for wm.Srv.Accept(func(p *player.Player) {
 		p.Handle(skyblock.NewPlayerHandler(p, settings, db))

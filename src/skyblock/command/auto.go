@@ -4,6 +4,7 @@ import (
 	"github.com/df-mc/dragonfly/server/block/cube"
 	"github.com/df-mc/dragonfly/server/cmd"
 	"github.com/df-mc/dragonfly/server/player"
+	"github.com/phuongaz/minecraft-bedrock-server/src/server"
 	"github.com/phuongaz/minecraft-bedrock-server/src/skyblock"
 	"github.com/sandertv/gophertunnel/minecraft/text"
 )
@@ -17,7 +18,17 @@ type Auto struct {
 func (a Auto) Run(source cmd.Source, output *cmd.Output) {
 	p := source.(*player.Player)
 	h, _ := skyblock.LookupHandler(p)
-
+	world := p.World()
+	if world.Name() != "plots" {
+		//teleport to plots world
+		w, ok := server.WaterMelonGlobal().WorldManager.GetWorld("plots")
+		if !ok {
+			output.Errorf("Plots world not found")
+			return
+		}
+		p.Teleport(w.Spawn().Vec3())
+		output.Errorf("You are not in plots world, teleport to plots world")
+	}
 	pos := skyblock.PosFromBlockPos(cube.PosFromVec3(p.Position()), h.Settings())
 
 	// We iterate within a growing square, starting at the plots closest to the player and looking up to 16

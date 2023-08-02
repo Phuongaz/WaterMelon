@@ -16,12 +16,13 @@ func (t Teleport) Run(src cmd.Source, output *cmd.Output) {
 	if p, ok := src.(*player.Player); ok {
 		if t.Allow(src) {
 			worldName := t.Name
-			world, err := server.WaterMelonGlobal().GetWorld(worldName)
-			if err != nil {
-				output.Errorf("World not found")
+			world, ok := server.WaterMelonGlobal().WorldManager.GetWorld(worldName)
+			if !ok {
+				output.Errorf("World %v not found", worldName)
 				return
 			}
 			p.Teleport(world.Spawn().Vec3())
+			output.Printf("Teleported to world %v", p.World().Name())
 		} else {
 			output.Errorf("You don't have permission to use this command")
 		}
